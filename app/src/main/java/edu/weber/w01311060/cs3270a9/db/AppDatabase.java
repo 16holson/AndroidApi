@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import edu.weber.w01311060.cs3270a9.models.Courses;
 
-@Database(entities = {Courses.class}, version = 1)
+@Database(entities = {Courses.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase
 {
     private static AppDatabase instance;

@@ -208,8 +208,8 @@ public class CourseViewFragment extends DialogFragment
     {
         idInfo.setText(course.getId());
         nameInfo.setText(course.getName());
-        courseCodeInfo.setText(course.getCourseCode());
-        startAtInfo.setText(course.getStartAt());
-        endAtInfo.setText(course.getEndAt());
+        courseCodeInfo.setText(course.getCourse_code());
+        startAtInfo.setText(course.getStart_at());
+        endAtInfo.setText(course.getEnd_at());
     }
 }

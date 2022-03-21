@@ -121,9 +121,9 @@ public class CourseEditFragment extends DialogFragment
 
         idText.setText(course.getId());
         nameText.setText(course.getName());
-        courseCodeText.setText(course.getCourseCode());
-        startAtText.setText(course.getStartAt());
-        endAtText.setText(course.getEndAt());
+        courseCodeText.setText(course.getCourse_code());
+        startAtText.setText(course.getStart_at());
+        endAtText.setText(course.getEnd_at());
 
 
         requireDialog().getWindow().setWindowAnimations(R.style.AppTheme_DialogAnimation);
@@ -148,9 +148,9 @@ public class CourseEditFragment extends DialogFragment
                 //update database
                 course.setId(idText.getText().toString());
                 course.setName(nameText.getText().toString());
-                course.setCourseCode(courseCodeText.getText().toString());
-                course.setStartAt(startAtText.getText().toString());
-                course.setEndAt(endAtText.getText().toString());
+                course.setCourse_code(courseCodeText.getText().toString());
+                course.setStart_at(startAtText.getText().toString());
+                course.setEnd_at(endAtText.getText().toString());
                 new Thread(new Runnable()
                 {
                     @Override

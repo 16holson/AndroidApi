@@ -2,6 +2,9 @@ package edu.weber.w01311060.cs3270a9;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -10,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -75,6 +81,7 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -89,6 +96,10 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
     public void onResume()
     {
         super.onResume();
+
+        Toolbar toolbar = root.findViewById(R.id.listToolbar);
+        toolbar.setTitle("Courses");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         addBtn = root.findViewById(R.id.addBtn);
 
@@ -125,6 +136,31 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.courselist, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.loadCourses:
+                loadCourses();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void loadCourses()
+    {
+        GetCourseTask task = new GetCourseTask();
+        task.execute(getContext());
     }
 
     @Override

@@ -12,9 +12,9 @@ public class Courses
     {
         this.id = id;
         this.name = name;
-        this.courseCode = courseCode;
-        this.startAt = startAt;
-        this.endAt = endAt;
+        this.course_code = courseCode;
+        this.start_at = startAt;
+        this.end_at = endAt;
     }
     public Courses()
     {
@@ -22,28 +22,26 @@ public class Courses
     }
 
     @PrimaryKey(autoGenerate = true)
-    private int course_key;
-    @ColumnInfo(name = "id")
+    private int _id;
+    @ColumnInfo
     private String id;
-    @ColumnInfo(name = "name")
+    @ColumnInfo()
     private String name;
-    @ColumnInfo(name = "course_code")
-    private String courseCode;
-    @ColumnInfo(name = "start_at")
-    private String startAt;
-    @ColumnInfo(name = "end_at")
-    private String endAt;
+    @ColumnInfo
+    private String course_code;
+    @ColumnInfo
+    private String start_at;
+    @ColumnInfo
+    private String end_at;
 
-
-
-    public int getCourse_key()
+    public int get_id()
     {
-        return course_key;
+        return _id;
     }
 
-    public void setCourse_key(int course_key)
+    public void set_id(int _id)
     {
-        this.course_key = course_key;
+        this._id = _id;
     }
 
     public String getId()
@@ -66,46 +64,46 @@ public class Courses
         this.name = name;
     }
 
-    public String getCourseCode()
+    public String getCourse_code()
     {
-        return courseCode;
+        return course_code;
     }
 
-    public void setCourseCode(String courseCode)
+    public void setCourse_code(String course_code)
     {
-        this.courseCode = courseCode;
+        this.course_code = course_code;
     }
 
-    public String getStartAt()
+    public String getStart_at()
     {
-        return startAt;
+        return start_at;
     }
 
-    public void setStartAt(String startAt)
+    public void setStart_at(String start_at)
     {
-        this.startAt = startAt;
+        this.start_at = start_at;
     }
 
-    public String getEndAt()
+    public String getEnd_at()
     {
-        return endAt;
+        return end_at;
     }
 
-    public void setEndAt(String endAt)
+    public void setEnd_at(String end_at)
     {
-        this.endAt = endAt;
+        this.end_at = end_at;
     }
 
     @Override
     public String toString()
     {
         return "Courses{" +
-                "course_key=" + course_key +
+                "_id=" + _id +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", courseCode='" + courseCode + '\'' +
-                ", startAt='" + startAt + '\'' +
-                ", endAt='" + endAt + '\'' +
+                ", course_code='" + course_code + '\'' +
+                ", start_at='" + start_at + '\'' +
+                ", end_at='" + end_at + '\'' +
                 '}';
     }
 }
