@@ -1,4 +1,4 @@
-package edu.weber.w01311060.cs3270a8;
+package edu.weber.w01311060.cs3270a9;
 
 import android.content.Context;
 
@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import edu.weber.w01311060.cs3270a8.db.AppDatabase;
-import edu.weber.w01311060.cs3270a8.models.Courses;
+import edu.weber.w01311060.cs3270a9.db.AppDatabase;
+import edu.weber.w01311060.cs3270a9.models.Courses;
 
 public class CourseViewModel extends ViewModel
 {

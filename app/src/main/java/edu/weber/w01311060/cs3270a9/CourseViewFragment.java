@@ -1,7 +1,5 @@
-package edu.weber.w01311060.cs3270a8;
+package edu.weber.w01311060.cs3270a9;
 
-import android.app.Activity;
-import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,8 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.util.proto.ProtoOutputStream;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import edu.weber.w01311060.cs3270a8.db.AppDatabase;
-import edu.weber.w01311060.cs3270a8.models.Courses;
+import edu.weber.w01311060.cs3270a9.db.AppDatabase;
+import edu.weber.w01311060.cs3270a9.models.Courses;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,31 +41,11 @@ public class CourseViewFragment extends DialogFragment
 
     private View root;
     private TextView idInfo, nameInfo, courseCodeInfo, startAtInfo, endAtInfo;
-    private onCourseViewListener mCallBack;
     private Courses course;
 
     public CourseViewFragment()
     {
         // Required empty public constructor
-    }
-    public interface onCourseViewListener
-    {
-        void onCourseViewClick(Courses course, CourseEditFragment edit);
-        void onDeleteClick(Courses course, DeleteCourseDialog delete);
-    }
-
-    @Override
-    public void onAttach(@NonNull Activity activity)
-    {
-        super.onAttach(activity);
-        try
-        {
-            mCallBack = (CourseViewFragment.onCourseViewListener) activity;
-        }
-        catch (ClassCastException e)
-        {
-            throw new ClassCastException(activity.toString() + "must implement onCourseViewListener");
-        }
     }
 
     /**
@@ -115,7 +91,6 @@ public class CourseViewFragment extends DialogFragment
         toolbar.setTitle("View Course");
         toolbar.setNavigationIcon(R.drawable.ic_baseline_close_24);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
@@ -157,7 +132,6 @@ public class CourseViewFragment extends DialogFragment
         }
         else
         {
-            Log.d("ViewFrag", "id: " + prefs.getString("id", ""));
             new Thread(new Runnable()
             {
                 @Override
@@ -188,13 +162,30 @@ public class CourseViewFragment extends DialogFragment
             case R.id.edit:
                 CourseEditFragment dialog = new CourseEditFragment();
                 dialog.show(getParentFragmentManager(), "editDialog");
-                mCallBack.onCourseViewClick(course, dialog);
+                dialog.saveCourse(course);
+                dialog.setOnUpdateListener(new CourseEditFragment.onUpdateListener()
+                {
+                    @Override
+                    public void onUpdate(Courses course)
+                    {
+                        showCourse(course);
+                        setCourseText();
+                    }
+                });
                 return true;
             case R.id.delete:
                 DeleteCourseDialog deleteDialog = new DeleteCourseDialog();
                 deleteDialog.setCancelable(false);
-                deleteDialog.show(getParentFragmentManager(), "deleteDialog");
-                mCallBack.onDeleteClick(course, deleteDialog);
+                deleteDialog.show(getActivity().getSupportFragmentManager(), "deleteDialog");
+                deleteDialog.setCourse(course);
+                deleteDialog.setOnDeleteListener(new DeleteCourseDialog.onDeleteListener()
+                {
+                    @Override
+                    public void onDelete()
+                    {
+                        dismiss();
+                    }
+                });
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,6 +1,5 @@
-package edu.weber.w01311060.cs3270a8;
+package edu.weber.w01311060.cs3270a9;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,12 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import edu.weber.w01311060.cs3270a8.db.AppDatabase;
-import edu.weber.w01311060.cs3270a8.models.Courses;
+import edu.weber.w01311060.cs3270a9.db.AppDatabase;
+import edu.weber.w01311060.cs3270a9.models.Courses;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,8 +31,8 @@ public class DeleteCourseDialog extends DialogFragment
     private String mParam2;
 
     private Courses course;
+    private CourseViewFragment cv;
     private onDeleteListener mCallBack;
-
     public DeleteCourseDialog()
     {
         // Required empty public constructor
@@ -45,21 +40,12 @@ public class DeleteCourseDialog extends DialogFragment
 
     public interface onDeleteListener
     {
-        void onReload();
+        void onDelete();
     }
 
-    @Override
-    public void onAttach(@NonNull Activity activity)
+    public void setOnDeleteListener(onDeleteListener mCallBack)
     {
-        super.onAttach(activity);
-        try
-        {
-            mCallBack = (DeleteCourseDialog.onDeleteListener) activity;
-        }
-        catch (ClassCastException e)
-        {
-            throw new ClassCastException(activity.toString() + "must implement onDeleteListener");
-        }
+        this.mCallBack = mCallBack;
     }
 
     /**
@@ -103,7 +89,7 @@ public class DeleteCourseDialog extends DialogFragment
                                         .deleteCourse(course);
                             }
                         }).start();
-                        mCallBack.onReload();
+                        mCallBack.onDelete();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener()

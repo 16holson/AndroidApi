@@ -1,4 +1,4 @@
-package edu.weber.w01311060.cs3270a8;
+package edu.weber.w01311060.cs3270a9;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import android.view.WindowManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
-import edu.weber.w01311060.cs3270a8.db.AppDatabase;
-import edu.weber.w01311060.cs3270a8.models.Courses;
+import edu.weber.w01311060.cs3270a9.db.AppDatabase;
+import edu.weber.w01311060.cs3270a9.models.Courses;
 
 /**
  * A simple {@link Fragment} subclass.
