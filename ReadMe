@@ -1,0 +1,2 @@
+Pulls course data from Canvas Api and displays it in a RecyclerView. 
+Need to add Authorization.java and a string variable called "token" for it to work.
