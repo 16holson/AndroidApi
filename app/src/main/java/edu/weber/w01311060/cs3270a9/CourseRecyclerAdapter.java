@@ -52,6 +52,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     public interface onCourseListener
     {
         void onCourseClick(Courses course);
+        void onLongCourseClick(Courses course);
     }
 
     public void addItems(List<Courses> courses)
@@ -85,6 +86,15 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
                 public void onClick(View view)
                 {
                     mOnCourseListener.onCourseClick(course);
+                }
+            });
+            holder.courseInfo.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View view)
+                {
+                    mOnCourseListener.onLongCourseClick(course);
+                    return true;
                 }
             });
         }

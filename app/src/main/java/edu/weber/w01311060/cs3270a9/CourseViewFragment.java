@@ -87,7 +87,7 @@ public class CourseViewFragment extends DialogFragment
 
         requireDialog().getWindow().setWindowAnimations(R.style.AppTheme_DialogAnimation);
 
-        Toolbar toolbar = root.findViewById(R.id.toolbar);
+        Toolbar toolbar = root.findViewById(R.id.viewToolbar);
         toolbar.setTitle("View Course");
         toolbar.setNavigationIcon(R.drawable.ic_baseline_close_24);
 
@@ -151,6 +151,8 @@ public class CourseViewFragment extends DialogFragment
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater)
     {
         inflater.inflate(R.menu.courseview, menu);
+        MenuItem item = menu.findItem(R.id.loadCourses);
+        item.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

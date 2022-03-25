@@ -51,8 +51,6 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         // Required empty public constructor
     }
 
-
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -170,5 +168,13 @@ public class CourseListFragment extends Fragment implements CourseRecyclerAdapte
         CourseViewFragment dialog = new CourseViewFragment();
         dialog.show(ft, "CourseViewFragment");
         dialog.showCourse(course);
+    }
+
+    @Override
+    public void onLongCourseClick(Courses course)
+    {
+        AssignmentDialog assignmentDialog = new AssignmentDialog();
+        assignmentDialog.show(getParentFragmentManager(), "AssignmentDialog");
+        assignmentDialog.setCourseId(course.getId());
     }
 }

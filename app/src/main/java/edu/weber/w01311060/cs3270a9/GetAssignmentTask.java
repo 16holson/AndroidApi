@@ -1,6 +1,5 @@
 package edu.weber.w01311060.cs3270a9;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,28 +8,43 @@ import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import edu.weber.w01311060.cs3270a9.db.AppDatabase;
-import edu.weber.w01311060.cs3270a9.models.Courses;
+import edu.weber.w01311060.cs3270a9.models.Assignments;
 
-public class GetCourseTask extends AsyncTask<Context, Integer, String>
+
+public class GetAssignmentTask extends AsyncTask<String, Integer, String>
 {
     private String json = "";
-    private Context context;
-    @Override
-    protected String doInBackground(Context... contexts)
+    private String courseId;
+    private String[] assignments;
+    public AsyncResponse mCallBack = null;
+
+    public interface AsyncResponse
     {
-        this.context = context;
+        void processFinish(String[] output);
+    }
+
+    public GetAssignmentTask(AsyncResponse mCallBack)
+    {
+        this.mCallBack = mCallBack;
+    }
+
+    @Override
+    protected String doInBackground(String... params)
+    {
+
+        courseId = params[0];
 
         try
         {
-            URL url = new URL("https://weber.instructure.com/api/v1/courses?per_page=48");
+            URL url = new URL("https://weber.instructure.com/api/v1/courses/" + courseId + "/assignments?per_page=50");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Authorization", "Bearer " + Authorization.token);
@@ -68,35 +82,39 @@ public class GetCourseTask extends AsyncTask<Context, Integer, String>
     {
         super.onPostExecute(s);
 
-        Courses[] courses = jsonParse(json);
-
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                AppDatabase.getInstance(context)
-                        .getCourseDao()
-                        .insertCourses(courses);
-            }
-        }).start();
+        assignments = jsonParse(json);
+        Log.d("Task", "assignments: " + assignments);
+        mCallBack.processFinish(assignments);
     }
 
-    private Courses[] jsonParse(String rawJson)
+    private String[] jsonParse(String rawJson)
     {
         GsonBuilder gsonb = new GsonBuilder();
         Gson gson = gsonb.create();
 
-        Courses[] courses = null;
+        Assignments[] a = null;
 
         try
         {
-            courses = gson.fromJson(rawJson, Courses[].class);
+            a = gson.fromJson(rawJson, Assignments[].class);
         }
         catch (Exception e)
         {
             Log.d("Task", "Error converting json: " + e.getMessage());
         }
-        return courses;
+
+        //Too new
+//        String[] temp = Arrays.stream(a)
+//                              .map(assignment -> assignment.getName())
+//                              .toArray(String[]::new);
+        ArrayList<String> temp = new ArrayList<String>();
+        if(a != null)
+        {
+            for(int i = 0; i < a.length; i++)
+            {
+                temp.add(a[i].getName());
+            }
+        }
+        return temp.toArray(new String[temp.size()]);
     }
 }

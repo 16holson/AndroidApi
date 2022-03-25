@@ -126,8 +126,6 @@ public class CourseEditFragment extends DialogFragment
         endAtText.setText(course.getEnd_at());
 
 
-        requireDialog().getWindow().setWindowAnimations(R.style.AppTheme_DialogAnimation);
-
         Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setTitle("Edit Course");
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
