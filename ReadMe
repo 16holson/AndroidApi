@@ -1,2 +1,4 @@
-Pulls course data from Canvas Api and displays it in a RecyclerView. 
-Need to add Authorization.java and a string variable called "token" for it to work.
+Pulls course data from Canvas Api and displays it in a RecyclerView.
+Able to short click to see course detail, edit course, and delete course.
+Able to long click on a course to see the list of assignments.
+Need to add Authorization.java and a string variable called "token" for it to function.
